@@ -2,8 +2,8 @@ package bd;
 
 public class distrib {
 
-      String site_id;
-      String name;
+      private String site_id;
+      private String name;
       String sponsor;
       String sponsor_code;
       String birthday;
