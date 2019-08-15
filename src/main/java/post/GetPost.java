@@ -1,36 +1,21 @@
 package post;
 
-import java.io.BufferedReader;
+import bd.Connect_bd;
+import connect.*;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.*;
-import java.util.Arrays;
 import java.util.Properties;
 import java.util.StringTokenizer;
-
-import bd.Connect_bd;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 
 public class GetPost {
 
     /**
-     * Забрать запросом
+     * По запросу
      * "https://liwest.ru/partners-app/all_partners_to_xml.php?get_partner=no_transfer&pass=GjKeXbNm;"
      * получить JSON и проверить в BD (Фамилию(LASTNAME),
      * Имя(FIRSTNAME),
@@ -46,64 +31,18 @@ public class GetPost {
      */
 
 
-    public static <errorCon> void main(String[] args) throws ClientProtocolException, IOException, ClassNotFoundException, SQLException {
+    public static  void main(String[] args) throws ClientProtocolException, IOException, ClassNotFoundException, SQLException {
 
-        String prexixDogovora="555%";
-        String newCode=" ";
-        Date date = new Date(System.currentTimeMillis());
-        StringBuilder sb = new StringBuilder();
-
-        /*HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost("https://liwest.ru/partners-app/all_partners_to_xml.php?get_partner=no_transfer&pass=GjKeXbNm;");
-        post.addHeader("accept", "application/json");
-        post.addHeader("Host", "api.acme.com");
-        post.addHeader("X-Api-Version", "1.0");
-        post.addHeader("Authorization", "Basic ...");
-        HttpResponse response = client.execute(post);*/
-        StringBuilder sqlInDistributorsPost= new StringBuilder("https://liwest.ru/partners-app/all_partners_to_xml.php?get_partner=no_transfer&pass=GjKeXbNm;");
-        HttpURLConnection connection = null;
-        try {
-            connection = (HttpURLConnection) new URL(sqlInDistributorsPost.toString()).openConnection();
-            connection.setRequestMethod("POST");
-            connection.setUseCaches(false);
-            connection.setConnectTimeout(250);
-            connection.setReadTimeout(250);
-            if (HttpURLConnection.HTTP_OK == connection.getResponseCode())
-            {
-                System.out.println("ok");
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String line;
-                while ((line = in.readLine()) != null)
-                {
-                    sb.append(line);
-                }
-            }
-            else {
-                   System.out.println("Нет соедениения с сайтом https://liwest.ru/");
-
-                  }
-        } catch (Throwable cause) {
-            cause.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
-
-        JSONArray  array = new JSONArray();
-        try {
-             array = new JSONArray(sb.toString());
-        } catch (JSONException e) {
-            System.out.println("JSON Parser Error parsing data " );
-        }
-
-
-        //JSONObject object = new JSONObject(sb);
-        System.out.println(sb.toString());
+        /**Запрос JSON*/
+        JSONArray array = Getpostsite.postFromSiteToJSON("https://liwest.ru/partners-app/all_partners_to_xml.php?get_partner=no_transfer&pass=GjKeXbNm;");
+        /**Получили массив данных для обработки [{"site_id":"14588","name":"Бельская Ирина Васильевна","sponsor":"РАШИДОВА ЕЛЕНА ЮЛДАШЕВНА","sponsor_code":"888028072","birthday":"25.05.1978","address":"Сургут Ленина, 38-51","email":"irinavi@yandex.ru","phone":"+79227772136","isc_address":"СУРГУТ г. Сургут, ул.Быстринская, д.8, оф.7, Торгово-офисный центр &quot;Быстринский&quot;, второй этаж","flag":"N"},
+         * {"site_id":"14676","name":"Фаткиева Лидия  Павловна","sponsor":null,"sponsor_code":"777088956","birthday":"27.09.1983","address":"Город Уссурийский  Некрасова ","email":"Lapsina_l@mail.ru","phone":"+79147251132","isc_address":"ВЛАДИВОСТОК ул. Светланская, д.9, 2 этаж (вход со двора)","flag":"N"}]*/
 
         String DB_DRIVER="org.firebirdsql.jdbc.FBDriver";
         String DB_URL="jdbc:firebirdsql:localhost:E:\\runliwest\\base\\30062019\\LIWEST.FDB";
         Connection connFire = null;
+        //connFire= (Connection) new Connect_bd();
+
 
         try {
             Class.forName(DB_DRIVER);
@@ -162,27 +101,8 @@ public class GetPost {
              }
 
              if (id>0) {
-                 System.out.println("Есть запись");
-                 /*https://liwest.ru/partners-app/check_partner_xml.php?check_partner="+object.getInt("site_id").toString+14588*/
-                 StringBuilder sqlInDistributorsGet= new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(code).append("&pass=PfUhE;Ty;");
-                 connection=null;
-                 try {
-                      connection = (HttpURLConnection) new URL(sqlInDistributorsGet.toString()).openConnection();
-                      connection.setRequestMethod("POST");
-                      connection.setUseCaches(false);
-                      connection.setConnectTimeout(250);
-                      connection.setReadTimeout(250);
-                      if (HttpURLConnection.HTTP_OK==connection.getResponseCode()) System.out.println("ok");
-                 } catch (Throwable cause)
-                 {
-                     cause.printStackTrace();
-                 }
-                 finally {
-                     if (connection!=null)
-                     {
-                         connection.disconnect();
-                     }
-                 }
+                 /**Если записи есть то пометим их в bitrix*/
+                 /**Getpostsite.postToSite(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(code).append("&pass=PfUhE;Ty;").toString());*/
              } else {
                  /*Добавить в базу и отправить на сайт object.getInt("site_id");*/
                  System.out.println("Добавлять");
@@ -190,6 +110,7 @@ public class GetPost {
                  /**Код спонсора*/
                  count = 0;
                  int codeId = 0;
+
                  StringBuilder sqlIdCode = new StringBuilder("select id from distributors where code = ").append("\'").append(object.getString("sponsor_code").toString()).append("\'");
                  Statement stmId = connFire.createStatement();
                  ResultSet resId = stmId.executeQuery(sqlIdCode.toString());
@@ -204,8 +125,12 @@ public class GetPost {
                  if (connFire != null) {
 
                      /**Код договора*/
-                     count = 0;
-                     newCode = " ";
+                     count= 0;
+                     String newCode= " ";
+                     String prexixDogovora ="555%";
+
+                     Long date= System.currentTimeMillis();
+
                      StringBuilder sqlMaxCode = new StringBuilder("select max(code) code from distributors where code like ").append("\'").append(prexixDogovora).append("\'");
                      Statement stm555 = connFire.createStatement();
                      ResultSet resMaxCode = stm555.executeQuery(sqlMaxCode.toString());
@@ -268,24 +193,9 @@ public class GetPost {
                      objectsUpdate.append(" where BRANCH = 999 and ID =gen_id(DISTRIBUTOR_gen, 0) and OBJ_TYPE=100");
                      Statement stmobjectsUpdate = connFire.createStatement();
                      boolean resobjectsUpdate = stmDistributorsInsert.execute(objectsUpdate.toString());
-                     System.out.println(objectsUpdate);
-
-                     StringBuilder sqlInDistributorsGet = new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;");
-                     connection = null;
-                     try {
-                         connection = (HttpURLConnection) new URL(sqlInDistributorsGet.toString()).openConnection();
-                         connection.setRequestMethod("POST");
-                         connection.setUseCaches(false);
-                         connection.setConnectTimeout(250);
-                         connection.setReadTimeout(250);
-                         if (HttpURLConnection.HTTP_OK == connection.getResponseCode()) System.out.println("ok");
-                     } catch (Throwable cause) {
-                         cause.printStackTrace();
-                     } finally {
-                         if (connection != null) {
-                             connection.disconnect();
-                         }
-                     }
+                     /**Пометили в bitrix*/
+                     Getpostsite.postToSite(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").toString());
+                     /***/
                  } else System.out.println("Нет связи с БД");
                  }
         }
