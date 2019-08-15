@@ -32,7 +32,6 @@ public class Getpostsite {
             }
             else {
                 System.out.println("Нет соедениения с сайтом https://liwest.ru/");
-
             }
         } catch (Throwable cause) {
             cause.printStackTrace();
