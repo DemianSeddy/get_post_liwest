@@ -36,7 +36,8 @@ public class GetPost {
         /**Запрос JSON*/
         JSONArray array = Getpostsite.postFromSiteToJSON("https://liwest.ru/partners-app/all_partners_to_xml.php?get_partner=no_transfer&pass=GjKeXbNm;");
         /**Получили массив данных для обработки [{"site_id":"14588","name":"Бельская Ирина Васильевна","sponsor":"РАШИДОВА ЕЛЕНА ЮЛДАШЕВНА","sponsor_code":"888028072","birthday":"25.05.1978","address":"Сургут Ленина, 38-51","email":"irinavi@yandex.ru","phone":"+79227772136","isc_address":"СУРГУТ г. Сургут, ул.Быстринская, д.8, оф.7, Торгово-офисный центр &quot;Быстринский&quot;, второй этаж","flag":"N"},
-         * {"site_id":"14676","name":"Фаткиева Лидия  Павловна","sponsor":null,"sponsor_code":"777088956","birthday":"27.09.1983","address":"Город Уссурийский  Некрасова ","email":"Lapsina_l@mail.ru","phone":"+79147251132","isc_address":"ВЛАДИВОСТОК ул. Светланская, д.9, 2 этаж (вход со двора)","flag":"N"}]*/
+
+         * {"site_id":"14676","name":"Фаткиева Лидия Павловна","sponsor":null,"sponsor_code":"777088956","birthday":"27.09.1983","address":"Город Уссурийский  Некрасова ","email":"Lapsina_l@mail.ru","phone":"+79147251132","isc_address":"ВЛАДИВОСТОК ул. Светланская, д.9, 2 этаж (вход со двора)","flag":"N"}]*/
 
         String DB_DRIVER="org.firebirdsql.jdbc.FBDriver";
         String DB_URL="jdbc:firebirdsql:localhost:E:\\runliwest\\base\\work\\LIWEST.FDB";
@@ -60,12 +61,14 @@ public class GetPost {
         catch (SQLException e1) {
             e1.printStackTrace();
         }
+
+
         for (int i = 0; i < array.length(); i++) {
             JSONObject object = array.getJSONObject(i);
-            /*System.out.println(object.getInt("site_id"));
+            System.out.println(object.getInt("site_id"));
             System.out.println(object.getString("birthday"));
             System.out.println(object.getString("sponsor_code"));
-            System.out.println(object.getString(""));*/
+            System.out.println(object.getString(""));
             /**Разбивка name на фамилию имя отчество
              * и заливли в массив*/
             String[] lastFirstMiddle= new String[3];
@@ -103,7 +106,7 @@ public class GetPost {
 
              if (id>0) {
                  /**Если записи есть то пометим их в bitrix*/
-                /*Getpostsite.postToSite(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(code).append("&pass=PfUhE;Ty;").toString());*/
+                 Getpostsite.postToSite(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(code).append("&pass=PfUhE;Ty;").toString());
              } else {
                  /*Добавить в базу и отправить на сайт object.getInt("site_id");*/
                  System.out.println("Добавлять");
@@ -205,7 +208,7 @@ public class GetPost {
 
                      /**Пометили в bitrix*/
                      /*System.out.println("Пометили в bitrix");*/
-                     /*Getpostsite.postToSite(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&email=").append(object.getString("email").toString()).toString());*/
+                     Getpostsite.postToSite(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&email=").append(object.getString("email").toString()).toString());
                      /***/
                  } else System.out.println("Нет связи с БД");
              }
