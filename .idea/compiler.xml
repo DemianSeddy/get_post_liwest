@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="get_post" />
+        <module name="post_get" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="get_post" target="1.5" />
+      <module name="post_get" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
