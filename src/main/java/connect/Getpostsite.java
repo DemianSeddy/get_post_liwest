@@ -1,4 +1,5 @@
 package connect;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -6,11 +7,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
+
 
 public class Getpostsite {
 
     private static HttpURLConnection connection=null;
-    private static JSONArray  array_Json = new JSONArray("[{}]");
+    private static JSONArray  array_Json = new JSONArray();
 
     public static JSONArray postFromSiteToJSON(String urlString) {
 
@@ -41,12 +44,12 @@ public class Getpostsite {
             }
         }
         try {
-            System.out.println(sb);
+            //System.out.println(sb);
             array_Json= new JSONArray(sb.toString());
 
         } catch (JSONException e) {
-            System.out.println("JSON Parser Error parsing data "+e.toString() );
-            array_Json= new JSONArray("[{},{}]");
+            System.out.println("(1.1) JSON пустой  date:"+LocalDateTime.now().toString());
+            //array_Json= new JSONArray("[{},{}]");
        }
           return array_Json;
     }
