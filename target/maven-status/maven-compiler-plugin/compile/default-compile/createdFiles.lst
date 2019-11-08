@@ -1,0 +1,4 @@
+post\GetPost.class
+connect\Getpostsite.class
+bd\Connect_bd.class
+bd\distrib.class
