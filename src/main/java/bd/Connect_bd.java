@@ -7,36 +7,39 @@ import java.sql.Statement;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+
+
 public class Connect_bd {
 
     private static final String DB_DRIVER = "org.firebirdsql.jdbc.FBDriver";
     private static final String DB_URL = "jdbc:firebirdsql:localhost:E:\\runliwest\\base\\work\\LIWEST.FDB";
     private static Connection connection =  null;
     private static boolean flag = false;
+    private static final Logger LOGGER = Logger.getLogger(Connect_bd.class.getName());
 
-     private Logger logger;
+
 
     public Connect_bd() throws ClassNotFoundException {
 
         try {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
-            logger.info("connectToDB: Firebird JCA-JDBC драйвер не найден");
+            LOGGER.info("connectToDB: Firebird JCA-JDBC драйвер не найден");
         }
 
         try {
             String conString = DB_URL;
             Properties paramConnection = new Properties();
             paramConnection.setProperty("user", "SYSDBA");
-            paramConnection.setProperty("password", "masterkey1");
+            paramConnection.setProperty("password", "masterkey");
             paramConnection.setProperty("encoding", "WIN1251");
             connection = DriverManager.getConnection(conString, paramConnection);
             flag = true;
-            //logger.info("Подключены к базе" + conString.toString());
+            LOGGER.info("Подключены к базе" + conString.toString());
         }
         catch (SQLException e1) {
             e1.printStackTrace();
-             logger.info("Не подключены к базе" + e1.toString());
+             LOGGER.info("Не подключены к базе" + e1.toString());
         }
     }
 

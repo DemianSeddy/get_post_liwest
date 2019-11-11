@@ -255,7 +255,7 @@ public class GetPost {
                      /**Пометили в bitrix убирать коменты*/
                      System.out.println(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
                      System.out.println("Добавили а базу и отправили в bitrix c кодом договора "+newCode.toString()+" date:"+LocalDateTime.now().toString());
-                     Getpostsite.postToSite(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
+                     //Getpostsite.postToSite(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
                      //Getpostsite.postToSite(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append("support@liwest.ru").toString());
 
                  } else System.out.println("Нет связи с БД");
