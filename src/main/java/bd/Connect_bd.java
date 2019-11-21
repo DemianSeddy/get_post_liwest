@@ -24,7 +24,8 @@ public class Connect_bd {
         try {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
-            LOGGER.info("connectToDB: Firebird JCA-JDBC драйвер не найден");
+            LOGGER.warning("connectToDB: Firebird JCA-JDBC драйвер не найден");
+
         }
 
         try {
@@ -39,7 +40,7 @@ public class Connect_bd {
         }
         catch (SQLException e1) {
             e1.printStackTrace();
-             LOGGER.info("Не подключены к базе" + e1.toString());
+             LOGGER.warning("Не подключены к базе" + e1.toString());
         }
     }
 
@@ -53,7 +54,7 @@ public class Connect_bd {
         try {
             statement = connection.createStatement();
         } catch (SQLException e) {
-            //logger.info("AccessToFB: "+e.getMessage());
+            LOGGER.warning("AccessToFB: "+e.getMessage());
             return null;
         }
         return statement;

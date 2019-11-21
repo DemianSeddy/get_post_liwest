@@ -2,7 +2,7 @@ package post;
 
 import bd.Connect_bd;
 import connect.*;
-
+import loadsettingfromxml.ParserXPATH;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -44,6 +44,7 @@ public class GetPost {
      * отправить ID_BITRIX отправить на сайт)
      */
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy[-MM[-dd]]");
+    /*private static final StringBuilder urlDomen = StringBuilder();*/
 
     static TemporalAccessor parseDate(String dateAsString) {
         return FORMATTER.parseBest(dateAsString, LocalDate::from, YearMonth::from, Year::from);
@@ -52,6 +53,11 @@ public class GetPost {
 
 
     public static void main(String[] args) throws ClientProtocolException, IOException, ClassNotFoundException,SQLException {
+
+        //Через файл XML connect
+        String fileXml="basesetting.xml";
+        String reg = new ParserXPATH.("\\regdriver\text()",fileXml).getParametr();
+
 
         Statement statement = null;
 
