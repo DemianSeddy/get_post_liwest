@@ -17,8 +17,6 @@ public class Connect_bd {
     private static boolean flag = false;
     private static final Logger LOGGER = Logger.getLogger(Connect_bd.class.getName());
 
-
-
     public Connect_bd() throws ClassNotFoundException {
 
         try {

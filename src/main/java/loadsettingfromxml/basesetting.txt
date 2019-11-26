@@ -1,4 +1,0 @@
-<regdriver>
-    regdriver
-</regdriver>
-

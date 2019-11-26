@@ -20,6 +20,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.xml.xpath.XPathExpressionException;
 import java.time.*;
 import java.time.format.*;
 import java.time.temporal.*;
@@ -52,11 +53,11 @@ public class GetPost {
 
 
 
-    public static void main(String[] args) throws ClientProtocolException, IOException, ClassNotFoundException,SQLException {
+    public static void main(String[] args) throws ClientProtocolException, IOException, ClassNotFoundException, SQLException, XPathExpressionException {
 
         //Через файл XML connect
         String fileXml="basesetting.xml";
-        String reg = new ParserXPATH.("\\regdriver\text()",fileXml).getParametr();
+        String reg = new ParserXPATH("\\regdriver\\text()",fileXml).getParametr();
 
 
         Statement statement = null;
