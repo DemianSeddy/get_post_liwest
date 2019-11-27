@@ -1,7 +1,6 @@
 package post;
 
 import bd.Connect_bd;
-import connect.*;
 import loadsettingfromxml.ParserXPATH;
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,20 +10,19 @@ import java.math.BigInteger;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 
-import java.util.Properties;
 import java.util.StringTokenizer;
 
-import jdk.nashorn.internal.parser.JSONParser;
 import org.apache.http.client.ClientProtocolException;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import java.time.*;
 import java.time.format.*;
 import java.time.temporal.*;
-import java.util.logging.Logger;
 
 
 public class GetPost {
@@ -53,12 +51,11 @@ public class GetPost {
 
 
 
-    public static void main(String[] args) throws ClientProtocolException, IOException, ClassNotFoundException, SQLException, XPathExpressionException {
+    public static void main(String[] args) throws ClientProtocolException, IOException, ClassNotFoundException, SQLException, XPathExpressionException, ParserConfigurationException, SAXException {
 
         //Через файл XML connect
-        String fileXml="basesetting.xml";
-        String reg = new ParserXPATH("\\regdriver\\text()",fileXml).getParametr();
-
+        String fileXml= "src/main/basesetting.xml";
+        String reg = new ParserXPATH("/setting/property_base)",fileXml).getParametr();
 
         Statement statement = null;
 
