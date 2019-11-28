@@ -1,5 +1,9 @@
 package bd;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,33 +15,43 @@ import java.util.logging.Logger;
 
 public class Connect_bd {
 
-    private static final String DB_DRIVER = "org.firebirdsql.jdbc.FBDriver";
-    private static final String DB_URL = "jdbc:firebirdsql:localhost:E:\\runliwest\\base\\work\\LIWEST.FDB";
+    //private static final String DB_DRIVER = "org.firebirdsql.jdbc.FBDriver";
+    //private static final String DB_URL = "jdbc:firebirdsql:localhost:E:\\runliwest\\base\\work\\LIWEST.FDB";
     private static Connection connection =  null;
     private static boolean flag = false;
     private static final Logger LOGGER = Logger.getLogger(Connect_bd.class.getName());
 
-    public Connect_bd() throws ClassNotFoundException {
-
-        String conString = DB_URL;
-        Properties paramConnection = new Properties();
-        paramConnection.setProperty("user", "SYSDBA");
-        paramConnection.setProperty("password", "masterkey");
-        paramConnection.setProperty("encoding", "WIN1251");
+    public static Properties paramConnection = null;
 
 
+    public Connect_bd(String path) throws ClassNotFoundException, IOException {
+
+        //String conString = DB_URL;
+
+        InputStream inStream = new FileInputStream(path);
+
+        paramConnection = new Properties();
+
+        paramConnection.loadFromXML(inStream);
+
+        for (String key : paramConnection.stringPropertyNames())
+        {
+            System.out.print(key);
+            System.out.print("=");
+            System.out.println(paramConnection.get(key));
+        }
 
         try {
-            Class.forName(DB_DRIVER);
+            Class.forName(paramConnection.get("DB_DRIVER").toString());
         } catch (ClassNotFoundException e) {
             LOGGER.warning("connectToDB: Firebird JCA-JDBC драйвер не найден");
 
         }
 
         try {
-            connection = DriverManager.getConnection(conString, paramConnection);
+            connection = DriverManager.getConnection(paramConnection.get("DB_URL").toString(), paramConnection);
             flag = true;
-            LOGGER.info("Подключены к базе" + conString.toString());
+            LOGGER.info("Подключены к базе" + paramConnection.get("DB_URL").toString().toString());
         }
         catch (SQLException e1) {
             e1.printStackTrace();
