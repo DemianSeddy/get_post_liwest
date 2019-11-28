@@ -66,7 +66,7 @@ public class ParserXPATH {
 		} catch (ParserConfigurationException | SAXException | IOException ex) {
 			ex.printStackTrace(System.out);
 		}
-
+		System.out.println(documentxml.toString());
    	     	// Создать XPathFactory
 		   XPathFactory pathFactory = XPathFactory.newInstance();
 		   // Создать XPath
