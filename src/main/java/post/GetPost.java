@@ -1,6 +1,7 @@
 package post;
 
 import bd.Connect_bd;
+import connect.Getpostsite;
 import loadsettingfromxml.ParserXPATH;
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,6 +18,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xml.sax.SAXException;
+import sun.font.DelegatingShape;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
@@ -43,6 +45,7 @@ public class GetPost {
      * отправить ID_BITRIX отправить на сайт)
      */
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy[-MM[-dd]]");
+
     /*private static final StringBuilder urlDomen = StringBuilder();*/
 
     static TemporalAccessor parseDate(String dateAsString) {
@@ -54,13 +57,11 @@ public class GetPost {
     public static void main(String[] args) throws ClientProtocolException, IOException, ClassNotFoundException, SQLException, XPathExpressionException, ParserConfigurationException, SAXException {
 
         //Через файл XML connect
-        String fileXml= "config/basesetting.xml";
-        String reg = new ParserXPATH("//setting/property_base)",fileXml).getParametr();
-
+        String fileXml= "config/pathurl.xml";
         Statement statement = null;
 
         try {
-             statement = new Connect_bd().getStatementForFBConnect();
+             statement = new Connect_bd(fileXml).getStatementForFBConnect();
         }
         catch (Exception e){
             System.out.println(e.getMessage());
@@ -73,10 +74,13 @@ public class GetPost {
         /**Запрос JSON*/
         //try {
         // "[{"birthday":"24.06.1995","sponsor":null,"address":"Ростов, ул.Ленина, 67-76","flag":"N","sponsor_code":"85858555","phone":"+7-454-455-64-78","isc_address":"Тюмень, ИСЦ Пети","site_id":"15519","name":"Тестовик Тестик Тест","email":"goro@mail.ru"}]";
-        //array = Getpostsite.postFromSiteToJSON("https://liwest.ru/ partners-app/all_partners_to_xml.php?get_partner=no_transfer&pass=GjKeXbNm;");
 
-        try {
-              File file = new File("d:\\jsontest.txt");
+        if (Connect_bd.paramConnection.get("JSON").toString()=="") {
+           array = Getpostsite.postFromSiteToJSON(Connect_bd.paramConnection.get("URL").toString()+"partners-app/all_partners_to_xml.php?get_partner=no_transfer&pass=GjKeXbNm;");
+        }
+        else {
+            try {
+              File file = new File(Connect_bd.paramConnection.get("JSON").toString());
               FileReader fileReader = new FileReader(file); // поток, который подключается к текстовому файлу
               BufferedReader bufferedReader = new BufferedReader(fileReader); // соединяем FileReader с BufferedReader
               String line;
@@ -85,14 +89,11 @@ public class GetPost {
             }
             bufferedReader.close(); // закрываем поток
         } catch (Exception e) {
-            e.printStackTrace();
+                e.printStackTrace();
+           }
         }
 
         System.out.println(array);
-
-
-
-
 
        System.out.println("Начинаем работать date:"+LocalDateTime.now().toString());
 
@@ -158,11 +159,11 @@ public class GetPost {
              }
 
              if (id>0) {
-                 /**Если записи есть то пометим их в bitrix
-                    Getpostsite.postToSite(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(code).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
-                    System.out.printf(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(code).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
+                 /**Если записи есть то пометим их в bitrix*/
+                    Getpostsite.postToSite(new StringBuilder(Connect_bd.paramConnection.get("URL").toString()+"partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(code).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
+                    System.out.printf(new StringBuilder(Connect_bd.paramConnection.get("URL").toString()+"partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(code).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
                     System.out.println(new StringBuilder("site_id=").append(code).append(" уже есть в базе ").append(LocalDateTime.now().toString()));
-                  */
+                  /****/
              } else {
                  if (statement != null) {
 
@@ -257,10 +258,10 @@ public class GetPost {
                       boolean resobjectsUpdate = statement.execute(objectsUpdate.toString());
 
                      /**Пометили в bitrix убирать коменты*/
-                     System.out.println(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
+                     System.out.println(new StringBuilder(Connect_bd.paramConnection.get("URL").toString()+"partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
                      System.out.println("Добавили а базу и отправили в bitrix c кодом договора "+newCode.toString()+" date:"+LocalDateTime.now().toString());
                      //Getpostsite.postToSite(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
-                     //Getpostsite.postToSite(new StringBuilder("https://liwest.ru/partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append("support@liwest.ru").toString());
+                     Getpostsite.postToSite(new StringBuilder(Connect_bd.paramConnection.get("URL").toString()+"partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append("support@liwest.ru").toString());
 
                  } else System.out.println("Нет связи с БД");
              }

@@ -3,9 +3,9 @@
     <properties>
         <comment>application.properties</comment>
         <entry key="DB_DRIVER">org.firebirdsql.jdbc.FBDriver</entry>
-        <entry key="DB_URL">jdbc:firebirdsql:localhost:E:\runliwest\base\work\LIWEST.FDB</entry>
+        <entry key="DB_URL">jdbc:firebirdsql:lao:D:\LiWest\Bases\LiWest.fdb</entry>
         <entry key="user">SYSDBA</entry>
-        <entry key="password">masterkey</entry>
+        <entry key="password">ktybdsq,fnjy</entry>
         <entry key="encoding">WIN1251</entry>
         <entry key="URL">http://xn--b1aghl7ag.xn--p1ai/</entry>
         <entry key="JSON"></entry>
