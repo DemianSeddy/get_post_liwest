@@ -54,8 +54,8 @@ public class GetPost {
     public static void main(String[] args) throws ClientProtocolException, IOException, ClassNotFoundException, SQLException, XPathExpressionException, ParserConfigurationException, SAXException {
 
         //Через файл XML connect
-        String fileXml= "basesetting.xml";
-        String reg = new ParserXPATH("/setting/property_base)",fileXml).getParametr();
+        String fileXml= "config/basesetting.xml";
+        String reg = new ParserXPATH("//setting/property_base)",fileXml).getParametr();
 
         Statement statement = null;
 

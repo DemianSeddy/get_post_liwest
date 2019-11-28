@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ROOT xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <BASE>
+        <DB_DRIVER>
+            org.firebirdsql.jdbc.FBDriver
+        </DB_DRIVER>
+        <DB_PROTOCOL>
+            jdbc
+        </DB_PROTOCOL>
+        <DB_NAME>
+            firebirdsql
+        </DB_NAME>
+        <DB_HOST>
+            localhost
+        </DB_HOST>
+        <DB_PATH>
+            \runliwest\base\work\LIWEST.FDB
+        </DB_PATH>
+        <USER>
+            SYSDBA
+        </USER>
+        <PASSWORD>
+            masterkey
+        </PASSWORD>
+    </BASE>
+    <PATH>
+        https://liwest.ru
+    </PATH>>
+</ROOT>

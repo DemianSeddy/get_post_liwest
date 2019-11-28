@@ -59,6 +59,7 @@ public class ParserXPATH {
 		   Document documentxml = null;
 
 		try {
+			//
 			DocumentBuilderFactory document = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = document.newDocumentBuilder();
 			documentxml =  documentBuilder.parse(new File(getNameFile()));

@@ -1,6 +1,5 @@
 <component name="libraryTable">
-  <library name="jax-rs-jersey-1.12" type="JAX-RS">
-    <properties version="jersey-1.12" />
+  <library name="jax-rs-jersey-1.12">
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/sun/jersey/jersey-core/1.9.1/comresrcgen-1.0.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/com/sun/jersey/jersey-core/1.9.1/asm-3.3.1.jar!/" />
