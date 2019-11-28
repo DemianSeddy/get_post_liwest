@@ -1,3 +1,4 @@
+loadsettingfromxml\ParserXPATH.class
 post\GetPost.class
 connect\Getpostsite.class
 bd\Connect_bd.class
