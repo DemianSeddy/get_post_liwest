@@ -19,6 +19,14 @@ public class Connect_bd {
 
     public Connect_bd() throws ClassNotFoundException {
 
+        String conString = DB_URL;
+        Properties paramConnection = new Properties();
+        paramConnection.setProperty("user", "SYSDBA");
+        paramConnection.setProperty("password", "masterkey");
+        paramConnection.setProperty("encoding", "WIN1251");
+
+
+
         try {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
@@ -27,11 +35,6 @@ public class Connect_bd {
         }
 
         try {
-            String conString = DB_URL;
-            Properties paramConnection = new Properties();
-            paramConnection.setProperty("user", "SYSDBA");
-            paramConnection.setProperty("password", "masterkey");
-            paramConnection.setProperty("encoding", "WIN1251");
             connection = DriverManager.getConnection(conString, paramConnection);
             flag = true;
             LOGGER.info("Подключены к базе" + conString.toString());

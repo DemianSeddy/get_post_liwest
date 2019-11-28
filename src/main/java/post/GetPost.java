@@ -73,7 +73,7 @@ public class GetPost {
         /**Запрос JSON*/
         //try {
         // "[{"birthday":"24.06.1995","sponsor":null,"address":"Ростов, ул.Ленина, 67-76","flag":"N","sponsor_code":"85858555","phone":"+7-454-455-64-78","isc_address":"Тюмень, ИСЦ Пети","site_id":"15519","name":"Тестовик Тестик Тест","email":"goro@mail.ru"}]";
-        //array = Getpostsite.postFromSiteToJSON("https://liwest.ru/partners-app/all_partners_to_xml.php?get_partner=no_transfer&pass=GjKeXbNm;");
+        //array = Getpostsite.postFromSiteToJSON("https://liwest.ru/ partners-app/all_partners_to_xml.php?get_partner=no_transfer&pass=GjKeXbNm;");
 
         try {
               File file = new File("d:\\jsontest.txt");
