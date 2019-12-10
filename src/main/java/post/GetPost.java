@@ -25,6 +25,7 @@ import javax.xml.xpath.XPathExpressionException;
 import java.time.*;
 import java.time.format.*;
 import java.time.temporal.*;
+import java.util.logging.Logger;
 
 
 public class GetPost {
@@ -45,7 +46,7 @@ public class GetPost {
      * отправить ID_BITRIX отправить на сайт)
      */
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy[-MM[-dd]]");
-
+    private static final Logger LOGGER = Logger.getLogger(GetPost.class.getName());
     /*private static final StringBuilder urlDomen = StringBuilder();*/
 
     static TemporalAccessor parseDate(String dateAsString) {
@@ -64,7 +65,7 @@ public class GetPost {
              statement = new Connect_bd(fileXml).getStatementForFBConnect();
         }
         catch (Exception e){
-            System.out.println(e.getMessage());
+            LOGGER.warning(e.getMessage());
             System.exit(2);
         }
 
@@ -94,9 +95,7 @@ public class GetPost {
            }
         }
 
-        System.out.println(array);
-
-       System.out.println("Начинаем работать date:"+LocalDateTime.now().toString());
+         LOGGER.info("Начинаем работать date:"+LocalDateTime.now().toString());
 
         if (array.toString() != "[]"){
             for (int i = 0; i < array.length(); i++) {
@@ -162,8 +161,8 @@ public class GetPost {
              if (id>0) {
                  /**Если записи есть то пометим их в bitrix*/
                     Getpostsite.postToSite(new StringBuilder(Connect_bd.paramConnection.get("URL").toString()+"partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(code).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
-                    System.out.printf(new StringBuilder(Connect_bd.paramConnection.get("URL").toString()+"partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(code).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
-                    System.out.println(new StringBuilder("site_id=").append(code).append(" уже есть в базе ").append(LocalDateTime.now().toString()));
+                    LOGGER.info(new StringBuilder(Connect_bd.paramConnection.get("URL").toString()+"partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(code).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
+                    LOGGER.info(new StringBuilder("site_id=").append(code).append(" уже есть в базе ").append(LocalDateTime.now().toString());
                   /****/
              } else {
                  if (statement != null) {
@@ -259,8 +258,8 @@ public class GetPost {
                       boolean resobjectsUpdate = statement.execute(objectsUpdate.toString());
 
                      /**Пометили в bitrix убирать коменты*/
-                     System.out.println(new StringBuilder(Connect_bd.paramConnection.get("URL").toString()+"partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
-                     System.out.println("Добавили а базу и отправили в bitrix c кодом договора "+newCode.toString()+" date:"+LocalDateTime.now().toString());
+                     LOGGER.info(new StringBuilder(Connect_bd.paramConnection.get("URL").toString()+"partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
+                     LOGGER.info("Добавили а базу и отправили в bitrix c кодом договора "+newCode.toString()+" date:"+LocalDateTime.now().toString());
                      Getpostsite.postToSite(new StringBuilder(Connect_bd.paramConnection.get("URL").toString()+"partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append(sponsoremail).toString());
                      //Getpostsite.postToSite(new StringBuilder(Connect_bd.paramConnection.get("URL").toString()+"partners-app/check_partner_xml.php?check_partner=").append(object.getInt("site_id")).append("&code=").append(newCode).append("&pass=PfUhE;Ty;").append("&sponsoremail=").append("support@liwest.ru").toString());
 

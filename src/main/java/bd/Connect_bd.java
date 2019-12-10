@@ -15,8 +15,6 @@ import java.util.logging.Logger;
 
 public class Connect_bd {
 
-    //private static final String DB_DRIVER = "org.firebirdsql.jdbc.FBDriver";
-    //private static final String DB_URL = "jdbc:firebirdsql:localhost:E:\\runliwest\\base\\work\\LIWEST.FDB";
     private static Connection connection =  null;
     private static boolean flag = false;
     private static final Logger LOGGER = Logger.getLogger(Connect_bd.class.getName());
